@@ -4,6 +4,16 @@ const bcrypt = require('bcryptjs');
 const { Schema } = mongoose;
 
 const usersSchema = new Schema({
+  firstname: {
+    type: String,
+    unique: false,
+    required: true,
+  },
+  lastname: {
+    type: String,
+    unique: false,
+    required: true,
+  },
   email: {
     type: String,
     unique: true,
@@ -25,7 +35,7 @@ const usersSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: "Budgets"
     }
-  ]
+  ],
   createdAt: {
     type: Date,
     default: Date.now(),
