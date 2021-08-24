@@ -166,6 +166,7 @@ const personalCategories = [
 const businessCategories = [
   {
     "name": "Income",
+    "startPercent": 100,
     "subCategories": ["Daily", "Weekly", "Bi-Weekly", "Monthly", "One Time"]
   },{
     "name": "Employees",

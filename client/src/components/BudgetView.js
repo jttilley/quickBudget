@@ -29,10 +29,10 @@ const BudgetView = () => {
         </Col>
         <Col>
           {
-            businessCategories.map(({ name, subCategories }) => {
+            businessCategories.map(({ name, startPercent, subCategories }) => {
               return (
                 <div>
-                  <h2>{name}</h2>
+                  <h2>{name} {startPercent}%</h2>
                   <ul>
                   {
                     subCategories.map((sub) => {
