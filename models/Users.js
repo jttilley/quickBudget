@@ -19,6 +19,11 @@ const usersSchema = new Schema({
     unique: true,
     required: true,
   },
+  username: {
+    type: String,
+    unique: true,
+    required: true,
+  },
   password: {
     type: String,
     unique: false,
@@ -30,12 +35,6 @@ const usersSchema = new Schema({
     required: true,
     default: false,
   },
-  budgets: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Budgets"
-    }
-  ],
   createdAt: {
     type: Date,
     default: Date.now(),

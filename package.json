@@ -1,51 +1,44 @@
 {
-  "name": "quickbudget",
-  "version": "0.1.0",
-  "private": true,
+  "name": "react-auth-hooks",
+  "version": "1.0.0",
+  "description": "react app with passport auth",
   "main": "server.js",
+  "scripts": {
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:prod": "node server.js",
+    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
+    "client": "cd client && npm run start",
+    "install": "cd client && npm install",
+    "build": "cd client && npm run build",
+    "heroku-postbuild": "npm run build",
+    "eslint": "eslint --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaymascarenas/react-auth-hooks.git"
+  },
+  "keywords": [],
+  "author": "Jay Mascarenas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jaymascarenas/react-auth-hooks/issues"
+  },
+  "homepage": "https://github.com/jaymascarenas/react-auth-hooks#readme",
   "dependencies": {
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^11.2.7",
-    "@testing-library/user-event": "^12.8.3",
-    "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
-    "bootstrap": "^5.0.2",
+    "colors": "^1.4.0",
+    "concurrently": "^5.3.0",
+    "connect-flash": "^0.1.1",
     "express": "^4.17.1",
-    "express-session": "^1.17.2",
-    "moment": "^2.29.1",
-    "mongojs": "^3.1.0",
-    "mongoose": "^5.13.3",
+    "express-session": "^1.17.1",
+    "if-env": "^1.0.4",
+    "memorystore": "^1.6.4",
+    "mongoose": "^5.10.13",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.6",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-scripts": "4.0.3",
-    "reactstrap": "^8.9.0",
-    "styled-components": "^5.3.0",
-    "web-vitals": "^1.1.2"
+    "path": "^0.12.7"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+  "devDependencies": {}
 }

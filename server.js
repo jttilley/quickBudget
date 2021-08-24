@@ -1,26 +1,22 @@
-// Dependencies 
 const express = require('express');
-const passport = require('./config/passport');
-const session = require('express-session');
-const MemoryStore = require('memorystore')(session);
-const logger = require('morgan');
-const mongoose = require('mongoose');
-const routes = require('./routes');
-const flash = require('connect-flash');
 
-// Set up the express app 
 const app = express();
 const PORT = process.env.PORT || 3001;
+// const colors = require('colors');
+const flash = require('connect-flash');
+const mongoose = require('mongoose');
+const session = require('express-session');
+const MemoryStore = require('memorystore')(session);
+const passport = require('passport');
+const logger = require('morgan');
+const routes = require('./routes');
 
-// Requiring our models folder for syncing 
-const db = require('./models');
-
-// Define middleware that handles data parsing 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(logger('dev'));
 app.use(flash());
+app.use(express.static('public'));
 
-// We need to use sessions to keep track of our user's login status
 app.use(
   session({
     cookie: { maxAge: 86400000 },
@@ -34,35 +30,34 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(logger('dev'));
 
-// Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
 }
 
-// Add routes, both API and view
-// app.use('/meals', require('./routes/api/mealRoutes')); 
-// require('./routes/api/mealRoutes')(app); 
-app.use(routes); 
-
+app.use(routes);
 
 // Connect to the Mongo DB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/quickBudget', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-  useFindAndModify: false
-});     
+mongoose
+  .connect(process.env.MONGODB_URI || 'mongodb://localhost/react-auth-hooks', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  })
+  .catch((error) => { 
+    console.log('Error connecting to Mongoose -> ', error);
+  });
 
-// test that we connect successfully or if a connection error occurs 
-const DB = mongoose.connection; 
-DB.on('error', console.error.bind(console, 'connection error:')); 
-DB.once('open', function () {
-  console.log('Successfully Connected!!'); 
-}); 
+mongoose.connection.once('open', () => {
+  console.log('MongoDB Connected');
+});
 
-// Start the server and sync Sequelize models 
-app.listen(PORT, function() {
-  console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
+mongoose.connection.on('error', (err) => {
+  console.log('Error staying connected to Mongoose -> ', err);
+});
+
+// Start the API server
+app.listen(PORT, (error) => {
+  if (error) throw error;
+  console.log(`🌎  connected on port ${PORT} 🌍`.cyan);
 });
