@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/jaymascarenas/react-auth-hooks#readme",
   "dependencies": {
-    "bcryptjs": "latest",
+    "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
     "concurrently": "^5.3.0",
     "connect-flash": "^0.1.1",

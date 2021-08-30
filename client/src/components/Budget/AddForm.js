@@ -33,7 +33,7 @@ const AddForm = ({subCategories, name}) => {
       <form>
         <h6>
           <label>Add item: </label>
-          <input class="entry-title" list={name} />
+          <input class="entry-title" placeholder="Type or select an item" list={name} />
           <datalist id={name}>
           {
             subCategories.map((sub) => {
