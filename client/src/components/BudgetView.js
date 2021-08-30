@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const StyledBudget = styled.form`
 h1 {
@@ -26,22 +28,12 @@ h1 {
 	color: white;
   }
 
-.under-expense {
-	color: #66de34;
-}
-
 p {
 	margin-right: 15px;
 }
 
 label {
   margin-right: 5px;
-}
-
-#accordion {
-	width: 70%;
-  margin: auto;
-  margin-top: 30px;
 }
 
 .category {
@@ -68,74 +60,86 @@ form {
 
 
 const BudgetView = () => {
+  const [expanded, setExpanded] = useState(false);
+
+  const handleExpandChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
+
+  const handleAddItem = () => {
+
+  };
+
   return (
     <>
       <h1>Budget</h1>
       <Row>
-        <Col id="accordion">
+        <Col>
           {
             personalCategories.map(({ name, subCategories, startPercent}) => {
               return (
                 <StyledBudget>
                   <Row className="row">
                     <Col>
-                        <h3 className="category">{name} {startPercent}%</h3>
-                        <form>
-                          <p>
-                            <label>Add item: </label>
-                            <input class="entry-title" list={name} />
-                            <datalist id={name}>
-                            {
-                              subCategories.map((sub) => {
-                                return (
-                                    <option value={sub}></option>
-                                );
-                              })
-                            }
-                            </datalist>
-                          </p>
-                          <p>
-                            <label>Amount: </label>
-                            <input type="text" data-name={name} class="entry-amount"/>
-                          </p>
-                          <p>
-                            <label>For: </label>
-                            <select name="entry-type" data-name={name} class="entry-type">
-                              <option value="Budgeting">Budgeting</option>
-                              <option value="Expense">Expense</option>
-                            </select>
-                            <button data-name={name} class="save">Save</button>
-                          </p>
-                        </form>
-                      </Col>
+                      <Accordion expanded={expanded === name} onChange={handleExpandChange(name)}>
+                        <AccordionSummary className="category" expandIcon={<ExpandMoreIcon />}>
+                          <h3>{name} <span>{startPercent}%</span></h3>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                          <Col>
+                            <Row>
+                              <form>
+                                <p>
+                                  <label>Add item: </label>
+                                  <input class="entry-title" list={name} />
+                                  <datalist id={name}>
+                                  {
+                                    subCategories.map((sub) => {
+                                      return (
+                                          <option value={sub}></option>
+                                      );
+                                    })
+                                  }
+                                  </datalist>
+                                </p>
+                                <p>
+                                  <label>Amount: </label>
+                                  <input type="text" data-name={name} class="entry-amount"/>
+                                </p>
+                                <p>
+                                  <label>For: </label>
+                                  <select name="entry-type" data-name={name} class="entry-type">
+                                    <option value="Budgeting">Budgeting</option>
+                                    <option value="Expense">Expense</option>
+                                  </select>
+                                  <button data-name={name} class="save">Save</button>
+                                </p>
+                              </form>
+                            </Row>
+                            <Row>
+                              <Col className="budgetItem">
+                                <p>budget item</p>
+                                <p>budget item</p>
+                                <p>budget item</p>
+                                <p>budget item</p>
+                              </Col>
+                              <Col className="expenseItem">
+                                <p>expense item</p>
+                                <p>expense item</p>
+                                <p>expense item</p>
+                                <p>expense item</p>
+                              </Col>
+                            </Row>
+                          </Col>
+                        </AccordionDetails>
+                      </Accordion>
+                    </Col>
                   </Row>
                 </StyledBudget>
               );
             })
           }
         </Col>
-        {/* <Col>
-          {
-            businessCategories.map(({ name, startPercent, subCategories }) => {
-              return (
-                <StyledBudget>
-                <Row className = "row">
-                  <h3 className="category">{name} {startPercent}%</h3>
-                  <ul>
-                  {
-                    subCategories.map((sub) => {
-                      return (
-                        <li>{sub}</li>
-                      );
-                    })
-                  }
-                  </ul>
-              </Row>
-              </StyledBudget>
-              );
-            })
-          }
-        </Col> */}
       </Row>
     </>
   );
