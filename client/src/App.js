@@ -8,7 +8,7 @@ import NoMatch from './pages/NoMatch';
 import TopNav from './components/TopNav';
 import { Container } from 'reactstrap';
 import UserContext from './utils/UserContext';
-import BudgetView from './components/BudgetView';
+import BudgetView from './components/Budget/BudgetView';
 
 const App = () => {
   const [userData, setUserData] = useState({
