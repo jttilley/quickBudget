@@ -125,7 +125,7 @@ const personalCategories = [
       "Alimony",
       "Pet Supplies",
       "Music/Technology",
-      "Misculaneous"
+      "Miscellaneous"
     ]
   },{
     name: "Recreation",
@@ -237,7 +237,7 @@ const businessCategories = [
     "name": "Advertising",
     "minPercent": 5,
     "maxPercent": 25,
-    "startPercent": 20,
+    "startPercent": 10,
     "subCategories": ["Publications","Signs"]
   },{
     "name": "Petty cash",

@@ -2,17 +2,20 @@ import React, { useState, useContext } from 'react';
 import { Col, Row } from 'reactstrap';
 import { personalCategories, businessCategories } from '../utils/allCategories';
 
+
+
+
 const BudgetView = () => {
   return (
-    <div>
+    <>
       <h1>Budget</h1>
       <Row>
-        <Col>
-          {
-            personalCategories.map(({ name, subCategories, startPercent}) => {
-              return (
-                <div>
-                  <h2>{name} {startPercent}%</h2>
+      <Col className="accordion">
+        {
+          personalCategories.map(({ name, subCategories, startPercent}) => {
+            return (
+              <Row>
+                  <h4>{name} {startPercent}%</h4>
                   <ul>
                   {
                     subCategories.map((sub) => {
@@ -22,33 +25,33 @@ const BudgetView = () => {
                     })
                   }
                   </ul>
-                </div>
-              );
-            })
-          }
-        </Col>
-        <Col>
-          {
-            businessCategories.map(({ name, startPercent, subCategories }) => {
-              return (
-                <div>
-                  <h2>{name} {startPercent}%</h2>
-                  <ul>
-                  {
-                    subCategories.map((sub) => {
-                      return (
-                        <li>{sub}</li>
-                      );
-                    })
-                  }
-                  </ul>
-                </div>
-              );
-            })
-          }
-        </Col>
+              </Row>
+            );
+          })
+        }
+      </Col>
+      <Col>
+        {
+          businessCategories.map(({ name, startPercent, subCategories }) => {
+            return (
+              <Row>
+                <h4>{name} {startPercent}%</h4>
+                <ul>
+                {
+                  subCategories.map((sub) => {
+                    return (
+                      <li>{sub}</li>
+                    );
+                  })
+                }
+                </ul>
+            </Row>
+            );
+          })
+        }
+      </Col>
       </Row>
-    </div>
+    </>
   );
 };
 
