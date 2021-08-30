@@ -22,6 +22,12 @@ label {
 `;
 
 const AddForm = ({subCategories, name}) => {
+  const handleAddItem = () => {
+    // check values
+    // add to database
+    // add item to list by changing state
+  }
+
   return (
     <StyleForm>
       <form>
@@ -39,8 +45,8 @@ const AddForm = ({subCategories, name}) => {
           </datalist>
         </h6>
         <h6>
-          <label>Amount: </label>
-          <input type="text" data-name={name} class="entry-amount"/>
+          <label>Total: </label>
+          <input type="text" placeholder="Enter equation or total" data-name={name} class="entry-amount"/>
         </h6>
         <h6>
           <label>For: </label>
@@ -48,7 +54,7 @@ const AddForm = ({subCategories, name}) => {
             <option value="Budgeting">Budgeting</option>
             <option value="Expense">Expense</option>
           </select>
-          <button data-name={name} class="save">Save</button>
+          <button data-name={name} class="save" onClick="">Save</button>
         </h6>
       </form>
     </StyleForm>

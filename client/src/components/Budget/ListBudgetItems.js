@@ -37,7 +37,6 @@ const StyleItems = styled.form`
   margin-top: 10px;
   margin-right: 60px;
   text-decoration: underline;
-  tex
 }
 `;
 

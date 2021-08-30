@@ -38,17 +38,13 @@ form {
 
 `;
 
-
+// add user name for header
 
 const BudgetView = () => {
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
-  };
-
-  const handleAddItem = () => {
-
   };
 
   return (
@@ -73,7 +69,7 @@ const BudgetView = () => {
                             </Row>
                             <Row>
                               <ListBudgetItems className="budgetItem" 
-                              title="Budgeting"
+                              title="Budgeted"
                               budgetItems={[
                                 {
                                   name: 'item1',
