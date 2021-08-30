@@ -129,8 +129,11 @@ const App = () => {
     handleSignup,
     logout,
   };
+
+  
   // {isLoggedIn : Home ? BudgetView}
   return (
+    <>
     <UserContext.Provider value={contextValue}>
       <Router>
         <div>
@@ -155,6 +158,8 @@ const App = () => {
         </div>
       </Router>
     </UserContext.Provider>
+    </>
+    
   );
 };
 
