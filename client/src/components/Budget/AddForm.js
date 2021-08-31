@@ -21,24 +21,48 @@ label {
 }
 `;
 
-const AddForm = ({subCategories, name}) => {
-  const handleAddItem = () => {
+export const AddForm = ({subCategories, name}) => {
+  const [itemName, setItemName ] = useState();
+  const [amount, setAmount ] = useState();
+  const [budgetType, setBudgetType ] = useState('Budgeting');
+
+  const handleAddItem = (e) => {
+    e.preventDefault();
     // check values
+    const expense = budgetType !== 'Budgeting';
+      
+    if (itemName && !isNaN(amount)) {
+      const newItem = {
+        business: false,
+        isExpense: expense, 
+        name: itemName,
+        amount: Number(amount),
+        category: name,
+      };
+      console.log("🚀 ~ file: AddForm.js ~ line 39 ~ handleAddItem ~ newItem", newItem)
+      // document.getElementById(`${name}-item`).textContent = "";
+      // document.getElementById(`${name}-amt`).textContent = "";
+      setItemName("");
+      setAmount("");
+    };
+
     // add to database
     // add item to list by changing state
-  }
+  };    
 
   return (
     <StyleForm>
-      <form>
+      <form key={name}>
         <h6>
           <label>Add item: </label>
-          <input class="entry-title" placeholder="Type or select an item" list={name} />
+          <input className="entry-title" placeholder="Type or select" id={`${name}-item`} value={itemName} list={name} onChange={(e) => {
+              setItemName(e.target.value);
+          }}/>
           <datalist id={name}>
           {
             subCategories.map((sub) => {
               return (
-                  <option value={sub}></option>
+                  <option key={sub} value={sub}></option>
               );
             })
           }
@@ -46,15 +70,17 @@ const AddForm = ({subCategories, name}) => {
         </h6>
         <h6>
           <label>Total: </label>
-          <input type="text" placeholder="Enter equation or total" data-name={name} class="entry-amount"/>
+          <input type="text" placeholder="Enter equation or total" id={`${name}-amt`} value={amount} data-name={name} className="entry-amount" onChange={(e) => {
+              setAmount(e.target.value);
+          }}/>
         </h6>
         <h6>
           <label>For: </label>
-          <select name="entry-type" data-name={name} class="entry-type">
+          <select name="entry-type" data-name={name} className="entry-type" onChange={(e) => {setBudgetType(e.target.value)}}>
             <option value="Budgeting">Budgeting</option>
             <option value="Expense">Expense</option>
           </select>
-          <button data-name={name} class="save" onClick="">Save</button>
+          <button data-name={name} className="save" onClick={handleAddItem}>Save</button>
         </h6>
       </form>
     </StyleForm>

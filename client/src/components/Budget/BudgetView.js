@@ -2,13 +2,13 @@ import React, { useState, useContext } from 'react';
 import { Col, Row } from 'reactstrap';
 import { personalCategories, businessCategories } from '../../utils/allCategories';
 import styled from 'styled-components';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import Typography from '@material-ui/core/Typography';
+import { 
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+} from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import AddForm from './AddForm'
-import ListBudgetItems from './ListBudgetItems'
+import { AddForm, ListBudgetItems } from '.'
 
 const StyledBudget = styled.form`
 h1 {
@@ -32,15 +32,15 @@ form {
 }
 
 .budgetItems {
-  width: 100%
-  margin-right: 0;
+  width: 100%;
+  margin-right: 0px;
 }
 
 `;
 
 // add user name for header
 
-const BudgetView = () => {
+export const BudgetView = () => {
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandChange = (panel) => (event, isExpanded) => {
@@ -55,8 +55,8 @@ const BudgetView = () => {
           {
             personalCategories.map(({ name, subCategories, startPercent}) => {
               return (
-                <StyledBudget>
-                  <Row>
+                <StyledBudget key={name}>
+                  <Row >
                     <Col>
                       <Accordion expanded={expanded === name} onChange={handleExpandChange(name)}>
                         <AccordionSummary className="category" expandIcon={<ExpandMoreIcon />}>
@@ -65,7 +65,9 @@ const BudgetView = () => {
                         <AccordionDetails>
                           <Col className="budgetItems">
                             <Row>
-                              <AddForm subCategories={subCategories} name={name} />
+                              <AddForm 
+                                subCategories={subCategories} 
+                                name={name} />
                             </Row>
                             <Row>
                               <ListBudgetItems className="budgetItem" 
