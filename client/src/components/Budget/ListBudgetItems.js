@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Grid, Paper, makeStyles, List, ListItem } from '@material-ui/core';
+import { Grid, Paper, makeStyles, List, ListItem, TextField } from '@material-ui/core';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 const StyleItems = styled.form`
@@ -38,7 +38,7 @@ const StyleItems = styled.form`
   margin-top: 10px;
   margin-right: 60px;
   text-decoration: underline;
-  textAlign: "center",
+  margin: 2px, auto;
 }
 
 .money {
@@ -70,32 +70,39 @@ input {
 
 export const ListBudgetItems = ({budgetItems, title}) => {
 
+  function changeItem(id) {
+    console.log("changed text",id)
+  }
+
   return(
       <Grid item xs>
         <StyleItems>
-          <h6 ><i><b>{title}</b></i></h6>
-          <List className="budgetItem">
-          {
-            budgetItems.map((item) => {
-              return (
-                <ListItem className="item">
-                  <input 
-                    type="text" 
-                    className="noboarder entry-name" 
-                    value={item.name}></input>
-                  <label className="money">$</label>
-                  <input 
-                    type="number" 
-                    className="noboarder entry-amount" 
-                    value={item.amount.toFixed(2)}></input>
-                  <button 
-                    className="delete-element"
-                  ><DeleteForeverIcon/></button>
-                </ListItem>
-              );
-            })
-          }
-          </List>
+          <Paper >
+            <h6 className="title"><i><b>{title}</b></i></h6>
+            <List className="budgetItem">
+            {
+              budgetItems.map((item) => {
+                return (
+                  <ListItem className="item" key={item.name}>
+                    <input 
+                      type="text" 
+                      className="noboarder entry-name" 
+                      value={item.name}
+                      onClick={changeItem(item.id)}></input>
+                    <label className="money">$</label>
+                    <input 
+                      type="number" 
+                      className="noboarder entry-amount" 
+                      value={item.amount.toFixed(2)}></input>
+                    <button 
+                      className="delete-element"
+                    ><DeleteForeverIcon/></button>
+                  </ListItem>
+                );
+              })
+            }
+            </List>
+          </Paper>
         </StyleItems>
       </Grid>
   )

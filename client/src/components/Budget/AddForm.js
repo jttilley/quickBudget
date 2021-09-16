@@ -1,8 +1,19 @@
 import React, { useState, useContext } from 'react';
 import { Col, Row } from 'reactstrap';
 import styled from 'styled-components';
+import {Autocomplete} from '@material-ui/lab'
+import { makeStyles, TextField } from '@material-ui/core';
 
-const StyleForm = styled.form`
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
+  },
+}));
+
+const StyleInputs = styled.form`
 .save{
 	background-color: rgb(213, 218, 213);
 	border-radius: 5px;
@@ -26,6 +37,21 @@ export const AddForm = ({subCategories, name}) => {
   const [amount, setAmount ] = useState();
   const [budgetType, setBudgetType ] = useState('Budgeting');
 
+  const subCategoryProps = {
+    options: subCategories,
+    getOptionLabel: (option) => option,
+  };
+  
+const budgetProps = {
+  options: [
+    'Budgeting',
+    'Expense',
+  ],
+  getOptionLabel: (option) => option,
+}
+  
+
+
   const handleAddItem = (e) => {
     e.preventDefault();
     // check values
@@ -48,42 +74,27 @@ export const AddForm = ({subCategories, name}) => {
 
     // add to database
     // add item to list by changing state
-  };    
+  };   
 
+  const classes = useStyles();
   return (
-    <StyleForm>
-      <form key={name}>
-        <h6>
-          <label>Add item: </label>
-          <input className="entry-title" placeholder="Type or select" id={`${name}-item`} value={itemName} list={name} onChange={(e) => {
-              setItemName(e.target.value);
-          }}/>
-          <datalist id={name}>
-          {
-            subCategories.map((sub) => {
-              return (
-                  <option key={sub} value={sub}></option>
-              );
-            })
-          }
-          </datalist>
-        </h6>
-        <h6>
-          <label>Total: </label>
-          <input type="text" placeholder="Enter equation or total" id={`${name}-amt`} value={amount} data-name={name} className="entry-amount" onChange={(e) => {
-              setAmount(e.target.value);
-          }}/>
-        </h6>
-        <h6>
-          <label>For: </label>
-          <select name="entry-type" data-name={name} className="entry-type" onChange={(e) => {setBudgetType(e.target.value)}}>
-            <option value="Budgeting">Budgeting</option>
-            <option value="Expense">Expense</option>
-          </select>
-          <button data-name={name} className="save" onClick={handleAddItem}>Save</button>
-        </h6>
-      </form>
-    </StyleForm>
+    <form className={classes.root} noValidate>
+      {/* <label>Add item: </label> */}
+      <Autocomplete
+        {...subCategoryProps}
+        id="newBudgetItem"
+        autoHighlight
+        renderInput={(params) => <TextField {...params} label="Budget Item" />}
+      />
+
+    <TextField label="Equation or Total" />
+    <Autocomplete
+      {...budgetProps}
+      id="newBudgetItem"
+      autoHighlight
+      renderInput={(params) => <TextField {...params} label="Budget or Expense" defaultValue="Budgeting" />}
+    />
+  </form>
   )
 };
 

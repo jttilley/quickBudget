@@ -6,9 +6,18 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  makeStyles,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { AddForm, ListBudgetItems } from '.'
+
+const budgetStyle= makeStyles((theme) => ({
+  categoryTitles: {
+    textAlign: 'center',
+
+  },
+}))
+
 
 const StyledBudget = styled.form`
 h1 {
@@ -50,17 +59,17 @@ export const BudgetView = () => {
   return (
     <>
       <h1>Budget</h1>
-      <Row>
-        <Col>
-          {
-            personalCategories.map(({ name, subCategories, startPercent}) => {
-              return (
-                <StyledBudget key={name}>
-                  <Row >
+      {/* <StyledBudget> */}
+        <Row>
+          <Col>
+            {
+              personalCategories.map(({ name, subCategories, startPercent}) => {
+                return (
+                  <Row key={name}>
                     <Col>
                       <Accordion expanded={expanded === name} onChange={handleExpandChange(name)}>
                         <AccordionSummary className="category" expandIcon={<ExpandMoreIcon />}>
-                          <h4>{name} <span>{startPercent}%</span></h4>
+                          <h4>{startPercent}% <span>{name}</span></h4>
                         </AccordionSummary>
                         <AccordionDetails>
                           <Col className="budgetItems">
@@ -74,18 +83,22 @@ export const BudgetView = () => {
                               title="Budgeted"
                               budgetItems={[
                                 {
+                                  id: 1,
                                   name: 'item1',
                                   amount: 23
                                 },
                                 {
+                                  id: 2,
                                   name: 'item2',
                                   amount: 33.54
                                 },
                                 {
+                                  id: 3,
                                   name: 'item3',
                                   amount: 33.44
                                 },
                                 {
+                                  id: 4,
                                   name: 'item4',
                                   amount: 324
                                 },
@@ -95,18 +108,22 @@ export const BudgetView = () => {
                               title="Expenses"
                               budgetItems={[
                                 {
+                                  id: 11,
                                   name: 'expense1',
                                   amount: 23.44
                                 },
                                 {
+                                  id: 22,
                                   name: 'expense2',
                                   amount: 33.54
                                 },
                                 {
+                                  id: 33,
                                   name: 'expense3',
                                   amount: 33.44
                                 },
                                 {
+                                  id: 44,
                                   name: 'expense4',
                                   amount: 324.44
                                 },
@@ -118,12 +135,12 @@ export const BudgetView = () => {
                       </Accordion>
                     </Col>
                   </Row>
-                </StyledBudget>
-              );
-            })
-          }
-        </Col>
-      </Row>
+                );
+              })
+            }
+          </Col>
+        </Row>
+      {/* </StyledBudget> */}
     </>
   );
 };
