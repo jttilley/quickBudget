@@ -1,13 +1,29 @@
 import React from 'react';
+import { useQuery } from '@apollo/client';
+import { BudgetView } from '../components/Budget';
+import ProfileList from '../components/ProfileList';
 
+import { QUERY_PROFILES } from '../utils/queries';
 
 const Home = () => {
+  const { loading, data } = useQuery(QUERY_PROFILES);
+  const profiles = data?.profiles || [];
+
   return (
-    <div>
-      <h1>Welcome to Quick budget!</h1>
-      <h4>Login to get started.</h4>
-    </div>
-  )
+    <main>
+      <div className="flex-row justify-center">
+        <div className="col-12 col-md-10 my-3">
+          {loading ? (
+            <div>Loading...</div>
+          ) : (
+            <>
+              <BudgetView/>
+            </>
+          )}
+        </div>
+      </div>
+    </main>
+  );
 };
 
 export default Home;

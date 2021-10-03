@@ -1,7 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Col, Row } from 'reactstrap';
 import { personalCategories, businessCategories } from '../../utils/allCategories';
-import styled from 'styled-components';
 import { 
   Accordion,
   AccordionSummary,
@@ -11,7 +9,7 @@ import {
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { AddForm, ListBudgetItems } from '.'
 
-const budgetStyle= makeStyles((theme) => ({
+const budgetStyle = makeStyles((theme) => ({
   categoryTitles: {
     textAlign: 'center',
 
@@ -19,33 +17,33 @@ const budgetStyle= makeStyles((theme) => ({
 }))
 
 
-const StyledBudget = styled.form`
-h1 {
-  text-align: center;
-  border-bottom-width: 5px;
-  border-bottom-style: double;
-  border-color: #eff7f7d2;
-  font-family: 'Rokkitt', serif;
-  font-size: 3rem;
-	color: #ffffffdc;
-}
+// const StyledBudget = styled.form`
+// h1 {
+//   text-align: center;
+//   border-bottom-width: 5px;
+//   border-bottom-style: double;
+//   border-color: #eff7f7d2;
+//   font-family: 'Rokkitt', serif;
+//   font-size: 3rem;
+// 	color: #ffffffdc;
+// }
 
-.category {
-	background-image: linear-gradient(to right,#0d3d42b0 , white);  
-  height: 10px;
-}
+// .category {
+// 	background-image: linear-gradient(to right,#0d3d42b0 , white);  
+//   height: 10px;
+// }
 
-form {
-  display: flexbox;
-  flex-wrap: wrap;
-}
+// form {
+//   display: flexbox;
+//   flex-wrap: wrap;
+// }
 
-.budgetItems {
-  width: 100%;
-  margin-right: 0px;
-}
+// .budgetItems {
+//   width: 100%;
+//   margin-right: 0px;
+// }
 
-`;
+// `;
 
 // add user name for header
 
@@ -59,26 +57,17 @@ export const BudgetView = () => {
   return (
     <>
       <h1>Budget</h1>
-      {/* <StyledBudget> */}
-        <Row>
-          <Col>
             {
               personalCategories.map(({ name, subCategories, startPercent}) => {
                 return (
-                  <Row key={name}>
-                    <Col>
                       <Accordion expanded={expanded === name} onChange={handleExpandChange(name)}>
                         <AccordionSummary className="category" expandIcon={<ExpandMoreIcon />}>
                           <h4>{startPercent}% <span>{name}</span></h4>
                         </AccordionSummary>
                         <AccordionDetails>
-                          <Col className="budgetItems">
-                            <Row>
                               <AddForm 
                                 subCategories={subCategories} 
                                 name={name} />
-                            </Row>
-                            <Row>
                               <ListBudgetItems className="budgetItem" 
                               title="Budgeted"
                               budgetItems={[
@@ -129,20 +118,13 @@ export const BudgetView = () => {
                                 },
 
                               ]} />
-                            </Row>
-                          </Col>
                         </AccordionDetails>
                       </Accordion>
-                    </Col>
-                  </Row>
                 );
               })
             }
-          </Col>
-        </Row>
-      {/* </StyledBudget> */}
     </>
   );
 };
 
-export default BudgetView;
+// export default BudgetView;

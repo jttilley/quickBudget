@@ -1,166 +1,69 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import API from './utils/API';
+import React from 'react';
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
 import Home from './pages/Home';
 import Profile from './pages/Profile';
-import Auth from './pages/Auth';
-import NoMatch from './pages/NoMatch';
-import TopNav from './components/TopNav';
-import { Container } from 'reactstrap';
-import UserContext from './utils/UserContext';
-import BudgetView from './components/Budget/BudgetView';
+import Signup from './pages/Signup';
+import Login from './pages/Login';
+import Header from './components/Header';
+import Footer from './components/Footer';
 
-const App = () => {
-  const [userData, setUserData] = useState({
-    firstname: '',
-    lastname: '',
-    email: '',
-    username: '',
-    password: '',
-  });
-  const [loggedIn, setLoggedin] = useState(false);
-  const [user, setUser] = useState(null);
-  const [failureMessage, setFailureMessage] = useState(null);
+const httpLink = createHttpLink({
+  uri: '/graphql',
+});
 
-  useEffect(() => {
-    isLoggedIn();
-  }, []);
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setUserData({ ...userData, [name]: value });
+const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const token = localStorage.getItem('id_token');
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
+    },
   };
+});
 
-  const handleLogin = (event) => {
-    event.preventDefault();
-    const data = {
-      username: userData.username,
-      password: userData.password,
-    };
-    if (userData.username && userData.password) {
-      API.login(data)
-        .then((user) => {
-          if (user.data.loggedIn) {
-            setLoggedin(true);
-            setUser(user.data.user);
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
+});
 
-            console.log('log in successful');
-            window.location.href = '/profile';
-          } else {
-            console.log('Something went wrong :(');
-            alert('Login failed, Please try again.');
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  };
-
-  const handleSignup = (event) => {
-    event.preventDefault();
-    try {
-      const data = {
-        firstname: userData.firstname,
-        lastname: userData.lastname,
-        email: userData.email,
-        username: userData.username,
-        password: userData.password,
-      };
-
-      if (userData.username && userData.password) {
-        API.signup(data)
-          .then((user) => {
-            if (user.data === 'email is already in use') {
-              alert('Email already in use.');
-            }
-            if (user.data.loggedIn) {
-              if (user.data.loggedIn) {
-                setLoggedin(true);
-                setUser(user.data.user);
-                console.log('log in successful');
-                window.location.href = '/profile';
-              } else {
-                console.log('something went wrong :(');
-                console.log(user.data);
-                setFailureMessage(user.data);
-              }
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
-    } catch (error) {
-      console.log('App -> error', error);
-    }
-  };
-
-  const isLoggedIn = () => {
-    if (!loggedIn) {
-      API.isLoggedIn().then((user) => {
-        if (user.data.loggedIn) {
-          setLoggedin(true);
-          setUser(user.data.user);
-        } else {
-          console.log(user.data.message);
-        }
-      });
-    }
-  };
-
-  const logout = () => {
-    if (loggedIn) {
-      API.logout().then(() => {
-        console.log('logged out successfully');
-        setLoggedin(false);
-        setUser(null);
-      });
-    }
-  };
-
-  const contextValue = {
-    userData,
-    loggedIn,
-    user,
-    failureMessage,
-    handleInputChange,
-    handleLogin,
-    handleSignup,
-    logout,
-  };
-
-  
-  // {isLoggedIn : Home ? BudgetView}
+function App() {
   return (
-    <>
-    <UserContext.Provider value={contextValue}>
+    <ApolloProvider client={client}>
       <Router>
-        <div>
-          <TopNav />
-          <Container>
-            <Switch>
-              <Route exact path="/" component={BudgetView} /> 
-              <Route
-                exact
-                path="/login"
-                render={() => <Auth action="login" />}
-              />
-              <Route
-                exact
-                path="/signup"
-                render={() => <Auth action="signup" />}
-              />
-              <Route exact path="/profile" component={Profile} />
-              <Route render={NoMatch} />
-            </Switch>
-          </Container>
+        <div className="flex-column justify-flex-start min-100-vh">
+          <Header />
+          <div className="container">
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route exact path="/login">
+              <Login />
+            </Route>
+            <Route exact path="/signup">
+              <Signup />
+            </Route>
+            <Route exact path="/me">
+              <Profile />
+            </Route>
+            <Route exact path="/profiles/:profileId">
+              <Profile />
+            </Route>
+          </div>
+          <Footer />
         </div>
       </Router>
-    </UserContext.Provider>
-    </>
-    
+    </ApolloProvider>
   );
-};
+}
 
 export default App;

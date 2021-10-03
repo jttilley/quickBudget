@@ -1,68 +1,67 @@
 import React from 'react';
-import styled from 'styled-components';
 import { Grid, Paper, makeStyles, List, ListItem, TextField } from '@material-ui/core';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
-const StyleItems = styled.form`
-.noboarder {
-  display: inline;
-	border: none;
-}
+// const StyleItems = styled.form`
+// .noboarder {
+//   display: inline;
+// 	border: none;
+// }
 
-.delete-element {
-	background-color: white;
-	border: none;
-	color: red;
-}
+// .delete-element {
+// 	background-color: white;
+// 	border: none;
+// 	color: red;
+// }
 
-.entry-name {
-	text-align: right;
-	width: 150px;
-}
+// .entry-name {
+// 	text-align: right;
+// 	width: 150px;
+// }
 
-.entry-amount {
-	width: 80px
-}
+// .entry-amount {
+// 	width: 80px
+// }
 
-/* .item {
-  display: inline;
-} */
+// /* .item {
+//   display: inline;
+// } */
 
-/* .budgetItem {
-  display: flexbox;
-} */
+// /* .budgetItem {
+//   display: flexbox;
+// } */
 
-.title {
-  /* display: flex;
-  justify-content: flex-end; */
-  margin-top: 10px;
-  margin-right: 60px;
-  text-decoration: underline;
-  margin: 2px, auto;
-}
+// .title {
+//   /* display: flex;
+//   justify-content: flex-end; */
+//   margin-top: 10px;
+//   margin-right: 60px;
+//   text-decoration: underline;
+//   margin: 2px, auto;
+// }
 
-.money {
-  margin-left: 4px;
-  margin-right: -1px;
-  height: 16px;
-}
+// .money {
+//   margin-left: 4px;
+//   margin-right: -1px;
+//   height: 16px;
+// }
 
-li {
-  height: 30px;
-  margin: 0px 0px;
-  list-style-type: none;
-}
+// li {
+//   height: 30px;
+//   margin: 0px 0px;
+//   list-style-type: none;
+// }
 
-input {
-  /* height: 22px; */
-}
+// input {
+//   /* height: 22px; */
+// }
 
-/* ul {
-  margin-bottom: 5px;
-  height: 25px;
+// /* ul {
+//   margin-bottom: 5px;
+//   height: 25px;
 
-} */
-`;
+// } */
+// `;
 
 // use lists to list these
 
@@ -76,7 +75,6 @@ export const ListBudgetItems = ({budgetItems, title}) => {
 
   return(
       <Grid item xs>
-        <StyleItems>
           <Paper >
             <h6 className="title"><i><b>{title}</b></i></h6>
             <List className="budgetItem">
@@ -103,7 +101,6 @@ export const ListBudgetItems = ({budgetItems, title}) => {
             }
             </List>
           </Paper>
-        </StyleItems>
       </Grid>
   )
 }

@@ -1,6 +1,4 @@
 import React, { useState, useContext } from 'react';
-import { Col, Row } from 'reactstrap';
-import styled from 'styled-components';
 import {Autocomplete} from '@material-ui/lab'
 import { makeStyles, TextField } from '@material-ui/core';
 
@@ -13,24 +11,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const StyleInputs = styled.form`
-.save{
-	background-color: rgb(213, 218, 213);
-	border-radius: 5px;
-}
-.save:hover {
-	background-color: #3e8e41;
-	color: white;
-  }
+// const StyleInputs = styled.form`
+// .save{
+// 	background-color: rgb(213, 218, 213);
+// 	border-radius: 5px;
+// }
+// .save:hover {
+// 	background-color: #3e8e41;
+// 	color: white;
+//   }
 
-h6 {
-	margin-right: 15px;
-}
+// h6 {
+// 	margin-right: 15px;
+// }
 
-label {
-  margin-right: 5px;
-}
-`;
+// label {
+//   margin-right: 5px;
+// }
+// `;
 
 export const AddForm = ({subCategories, name}) => {
   const [itemName, setItemName ] = useState();
